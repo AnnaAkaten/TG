@@ -1,10 +1,21 @@
+from dotenv import load_dotenv
 import telebot
 from telebot import types
+import os
 
-token = '6915082221:AAGCu2YjFbiy0x0yNoWzJbNOTrBdpe1YVCA'
+
+def get_token(key):
+    tok_path = os.path.abspath('.env')
+    load_dotenv(tok_path)
+    return os.environ.get(key)
+
+
+token = get_token('TOKEN')
+
 bot = telebot.TeleBot(token)
 what_to_do = '✨️Прогуляться по лесу и исследовать близлежайшие лесные чащи, поля и водоёмы.\n✨️Организовать рыбалку или прокатиться на велосипедах.\n✨️Попариться в бане и окунуться в купель\n✨️В непосредственной близости располагается Спа центр с бассейном, рестораны, бильярд, боулинг, лыжная база, конный клуб и открытый каток.'
 rules = 'Правила проживания: \n❌строго запрещено курение, в том числе электронных сигарет. Запрещено разжигать открытые источники огня в доме и на веранде. В доме стоит противопожарная сигнализация.\n❌запрещено хождение в доме в уличной обуви;\n❌запрещено использовать на территории пиротехнику;\n❌запрещено проведение шумных вечеринок;\n❌возраст гостей для бронирования дома - от 26 лет.'
+avito = r'https://www.avito.ru/moskovskaya_oblast_troitsk/doma_dachi_kottedzhi/kottedzh_250m_na_uchastke_8sot._2983767192?utm_campaign=native&utm_medium=item_page_android&utm_source=soc_sharing_seller'
 
 
 @bot.message_handler(commands=['start'])
@@ -18,8 +29,12 @@ def get_use_text(message):
     if message.text.lower() in ['hello', 'привет', 'здравствуй', 'hi', 'hello']:
         bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}')
     elif 'фото' in message.text.lower():
-        data = open('i.webp', 'rb')
-        bot.send_photo(message.chat.id, data)
+        data1 = open(os.path.abspath(
+            '1.1ss3tba5eiIBHLgnF7q55zkXeCSJFPgqQRF4IIUAfiA.813nJpkz0a50gg2vhOEq249YuxEYmDSRPVmmIg2T3hc'), 'rb')
+        data2 = open(os.path.abspath(
+            '1.K8lSs7a5hyBkBAUtCLtE5VwRhSbsEgU2ZB-FIuAGgyI.nh0hG-HGpnSeGqu93ziMGu6SbOjnIqsZXrNHN8IzIeA'), 'rb')
+        bot.send_photo(message.chat.id, data1)
+        bot.send_photo(message.chat.id, data2)
     elif 'забронир' in message.text.lower():
         bot.send_message(message.chat.id,
                          r'https://www.avito.ru/moskovskaya_oblast_troitsk/doma_dachi_kottedzhi/kottedzh_250m_na_uchastke_8sot._2983767192?utm_campaign=native&utm_medium=item_page_android&utm_source=soc_sharing_seller')
@@ -66,8 +81,12 @@ def callback(call):
         elif call.data == 'q2':
             bot.send_message(call.message.chat.id, 'Длительно', reply_markup=bottom_menu_for_q2())
         elif call.data == 'q3':
-            bot.send_message(call.message.chat.id,
-                             r'https://www.avito.ru/moskovskaya_oblast_troitsk/doma_dachi_kottedzhi/kottedzh_250m_na_uchastke_8sot._2983767192?utm_campaign=native&utm_medium=item_page_android&utm_source=soc_sharing_seller')
+            data1 = open(os.path.abspath(
+                '1.1ss3tba5eiIBHLgnF7q55zkXeCSJFPgqQRF4IIUAfiA.813nJpkz0a50gg2vhOEq249YuxEYmDSRPVmmIg2T3hc'), 'rb')
+            data2 = open(os.path.abspath(
+                '1.K8lSs7a5hyBkBAUtCLtE5VwRhSbsEgU2ZB-FIuAGgyI.nh0hG-HGpnSeGqu93ziMGu6SbOjnIqsZXrNHN8IzIeA'), 'rb')
+            bot.send_photo(call.message.chat.id, data1)
+            bot.send_photo(call.message.chat.id, data2)
         elif call.data == 'q4':
             bot.send_message(call.message.chat.id, what_to_do)
         elif call.data == 'q5':
@@ -84,12 +103,15 @@ def callback(call):
             bot.send_message(call.message.chat.id, rules)
         elif call.data == 'q10':
             bot.send_message(call.message.chat.id,
-                             r'https://www.avito.ru/moskovskaya_oblast_troitsk/doma_dachi_kottedzhi/kottedzh_250m_na_uchastke_8sot._2983767192?utm_campaign=native&utm_medium=item_page_android&utm_source=soc_sharing_seller')
+                             r'89255931988')
         elif call.data == 'q11':
             bot.send_message(call.message.chat.id, 'Стоимость аренды на месяц: 230 000 руб.')
         elif call.data == 'q12':
-            bot.send_message(call.message.chat.id,
-                             r'https://www.avito.ru/moskovskaya_oblast_troitsk/doma_dachi_kottedzhi/kottedzh_250m_na_uchastke_8sot._2983767192?utm_campaign=native&utm_medium=item_page_android&utm_source=soc_sharing_seller')
+            bot.send_message(call.message.chat.id,  r'89255931988')
+
+
+
+
 
 
 bot.polling(none_stop=True)
