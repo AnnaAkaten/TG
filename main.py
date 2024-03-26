@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import telebot
 from telebot import types
 import os
+import req_kino
 
 
 def get_token(key):
@@ -61,7 +62,8 @@ def bottom_menu_for_q1():
     bottom2 = types.InlineKeyboardButton('Стоиомтсь в выходные', callback_data='q8')
     bottom3 = types.InlineKeyboardButton('Условия аренды', callback_data='q9')
     bottom4 = types.InlineKeyboardButton('Забронировать', callback_data='q10')
-    bottom_list.add(bottom1, bottom2, bottom3, bottom4)
+    bottom5 = types.InlineKeyboardButton('Летний кинотеатр', callback_data='q13')
+    bottom_list.add(bottom1, bottom2, bottom3, bottom4, bottom5)
     return bottom_list
 
 
@@ -70,6 +72,15 @@ def bottom_menu_for_q2():
     bottom1 = types.InlineKeyboardButton('Стоимость', callback_data='q11')
     bottom2 = types.InlineKeyboardButton('Забронировать', callback_data='q12')
     bottom_list.add(bottom1, bottom2)
+    return bottom_list
+
+def bottom_menu_for_q3():
+    bottom_list = types.InlineKeyboardMarkup(row_width=2)
+    bottom1 = types.InlineKeyboardButton('Комедия', callback_data='q14')
+    bottom2 = types.InlineKeyboardButton('Фантастика', callback_data='q15')
+    bottom3 = types.InlineKeyboardButton('Триллер', callback_data='q16')
+    bottom4 = types.InlineKeyboardButton('Драма', callback_data='q17')
+    bottom_list.add(bottom1, bottom2, bottom3, bottom4)
     return bottom_list
 
 
@@ -108,8 +119,16 @@ def callback(call):
             bot.send_message(call.message.chat.id, 'Стоимость аренды на месяц: 230 000 руб.')
         elif call.data == 'q12':
             bot.send_message(call.message.chat.id,  r'89255931988')
-
-
+        elif call.data == 'q13':
+            bot.send_message(call.message.chat.id, 'Выберете жанр: ', reply_markup=bottom_menu_for_q3())
+        elif call.data == 'q14':
+            bot.send_message(call.message.chat.id, req_kino.get_info('комедия'))
+        elif call.data == 'q15':
+            bot.send_message(call.message.chat.id, req_kino.get_info('фантастика'))
+        elif call.data == 'q16':
+            bot.send_message(call.message.chat.id, req_kino.get_info('триллер'))
+        elif call.data == 'q17':
+            bot.send_message(call.message.chat.id, req_kino.get_info('драма'))
 
 
 
