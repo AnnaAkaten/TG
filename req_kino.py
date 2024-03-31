@@ -36,7 +36,7 @@ def get_info(type_of_film):
 
 def add_to_movie(chat_id, name):
     with open('movie_hist.txt', 'a', encoding='utf-8') as data:
-        data.write(f'{chat_id} {name}\n')
+        data.write(f'{chat_id} {name}\n' )
 
 
 
