@@ -2,6 +2,11 @@ import json
 import requests
 import os
 from dotenv import load_dotenv
+import random
+import telebot
+from telebot import types
+
+movie_hist = {}
 
 
 def get_token(key):
@@ -21,5 +26,17 @@ def get_info(type_of_film):
     res = []
     m_l = data['docs']
     for i in m_l:
-        res.append(i['name'])
-    return '\n'.join(res)
+        res.append([i['name'], 'рейтинг kp: ' + str(i['rating']['kp']), i['description'], i['backdrop']['previewUrl']])
+    res = random.choice(res)
+    return [res[0], '\n'.join(res[1:3]), res[3]]
+    # return data
+
+
+# print(json.dumps(get_info('комедия'), indent=4))
+
+def add_to_movie(chat_id, name):
+    with open('movie_hist.txt', 'a', encoding='utf-8') as data:
+        data.write(f'{chat_id} {name}')
+
+
+

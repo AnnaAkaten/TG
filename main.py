@@ -74,6 +74,7 @@ def bottom_menu_for_q2():
     bottom_list.add(bottom1, bottom2)
     return bottom_list
 
+
 def bottom_menu_for_q3():
     bottom_list = types.InlineKeyboardMarkup(row_width=2)
     bottom1 = types.InlineKeyboardButton('Комедия', callback_data='q14')
@@ -118,19 +119,30 @@ def callback(call):
         elif call.data == 'q11':
             bot.send_message(call.message.chat.id, 'Стоимость аренды на месяц: 230 000 руб.')
         elif call.data == 'q12':
-            bot.send_message(call.message.chat.id,  r'89255931988')
+            bot.send_message(call.message.chat.id, r'89255931988')
         elif call.data == 'q13':
             bot.send_message(call.message.chat.id, 'Выберете жанр: ', reply_markup=bottom_menu_for_q3())
         elif call.data == 'q14':
-            bot.send_message(call.message.chat.id, req_kino.get_info('комедия'))
+            res = req_kino.get_info('комедия')
+            bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
+            bot.send_photo(call.message.chat.id, res[2])
+            req_kino.add_to_movie(call.message.chat.id, res[0])
+
         elif call.data == 'q15':
-            bot.send_message(call.message.chat.id, req_kino.get_info('фантастика'))
+            res = req_kino.get_info('фантастика')
+            bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
+            bot.send_photo(call.message.chat.id, res[2])
+            req_kino.add_to_movie(call.message.chat.id, res[0])
         elif call.data == 'q16':
-            bot.send_message(call.message.chat.id, req_kino.get_info('триллер'))
+            res = req_kino.get_info('триллер')
+            bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
+            bot.send_photo(call.message.chat.id, res[2])
+            req_kino.add_to_movie(call.message.chat.id, res[0])
         elif call.data == 'q17':
-            bot.send_message(call.message.chat.id, req_kino.get_info('драма'))
-
-
+            res = req_kino.get_info('драма')
+            bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
+            bot.send_photo(call.message.chat.id, res[2])
+            req_kino.add_to_movie(call.message.chat.id, res[0])
 
 
 bot.polling(none_stop=True)
