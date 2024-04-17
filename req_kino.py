@@ -26,17 +26,15 @@ def get_info(type_of_film):
     res = []
     m_l = data['docs']
     for i in m_l:
-        res.append([i['name'], 'рейтинг kp: ' + str(i['rating']['kp']), i['description'], i['backdrop']['previewUrl']])
+        res.append([i['name'], 'рейтинг kp: ' + str(i['rating']['kp']), i['description'], i['poster']['previewUrl']])
     res = random.choice(res)
     return [res[0], '\n'.join(res[1:3]), res[3]]
     # return data
 
 
+#
 # print(json.dumps(get_info('комедия'), indent=4))
-
-def add_to_movie(chat_id, name):
-    with open('movie_hist.txt', 'a', encoding='utf-8') as data:
-        data.write(f'{chat_id} {name}\n' )
-
-
-
+# my_req = requests.get(f'https://api.kinopoisk.dev/v1.4/movie?year=2023&genres.name=комедия', headers=headers)
+# res_dict = my_req.text
+# data = json.loads(res_dict)
+# print(json.dumps(data, indent=4))

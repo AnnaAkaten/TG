@@ -1,8 +1,14 @@
+# -*- coding: UTF-8 -*-
 from dotenv import load_dotenv
 import telebot
 from telebot import types
 import os
 import req_kino
+from python_basic_diploma.database.common.models import History, db
+from python_basic_diploma.database.utils.core import crud
+
+db_create = crud.create()
+db_retrieve = crud.retrieve()
 
 
 def get_token(key):
@@ -17,6 +23,13 @@ bot = telebot.TeleBot(token)
 what_to_do = '✨️Прогуляться по лесу и исследовать близлежайшие лесные чащи, поля и водоёмы.\n✨️Организовать рыбалку или прокатиться на велосипедах.\n✨️Попариться в бане и окунуться в купель\n✨️В непосредственной близости располагается Спа центр с бассейном, рестораны, бильярд, боулинг, лыжная база, конный клуб и открытый каток.'
 rules = 'Правила проживания: \n❌строго запрещено курение, в том числе электронных сигарет. Запрещено разжигать открытые источники огня в доме и на веранде. В доме стоит противопожарная сигнализация.\n❌запрещено хождение в доме в уличной обуви;\n❌запрещено использовать на территории пиротехнику;\n❌запрещено проведение шумных вечеринок;\n❌возраст гостей для бронирования дома - от 26 лет.'
 avito = r'https://www.avito.ru/moskovskaya_oblast_troitsk/doma_dachi_kottedzhi/kottedzh_250m_na_uchastke_8sot._2983767192?utm_campaign=native&utm_medium=item_page_android&utm_source=soc_sharing_seller'
+
+
+def film_info(call, res):
+    bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
+    bot.send_photo(call.message.chat.id, res[2])
+    data = [call.message.chat.id, call.message.from_user.first_name, res[0]]
+    db_create(db, History, data)
 
 
 @bot.message_handler(commands=['start'])
@@ -81,7 +94,8 @@ def bottom_menu_for_q3():
     bottom2 = types.InlineKeyboardButton('Фантастика', callback_data='q15')
     bottom3 = types.InlineKeyboardButton('Триллер', callback_data='q16')
     bottom4 = types.InlineKeyboardButton('Драма', callback_data='q17')
-    bottom_list.add(bottom1, bottom2, bottom3, bottom4)
+    bottom5 = types.InlineKeyboardButton('Посмотреть историю: ', callback_data='q18')
+    bottom_list.add(bottom1, bottom2, bottom3, bottom4, bottom5)
     return bottom_list
 
 
@@ -124,25 +138,20 @@ def callback(call):
             bot.send_message(call.message.chat.id, 'Выберете жанр: ', reply_markup=bottom_menu_for_q3())
         elif call.data == 'q14':
             res = req_kino.get_info('комедия')
-            bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
-            bot.send_photo(call.message.chat.id, res[2])
-            req_kino.add_to_movie(call.message.chat.id, res[0])
+            film_info(call, res)
 
         elif call.data == 'q15':
             res = req_kino.get_info('фантастика')
-            bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
-            bot.send_photo(call.message.chat.id, res[2])
-            req_kino.add_to_movie(call.message.chat.id, res[0])
+            film_info(call, res)
         elif call.data == 'q16':
             res = req_kino.get_info('триллер')
-            bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
-            bot.send_photo(call.message.chat.id, res[2])
-            req_kino.add_to_movie(call.message.chat.id, res[0])
+            film_info(call, res)
         elif call.data == 'q17':
             res = req_kino.get_info('драма')
-            bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
-            bot.send_photo(call.message.chat.id, res[2])
-            req_kino.add_to_movie(call.message.chat.id, res[0])
+            film_info(call, res)
+        elif call.data == 'q18':
+            bot.send_message(call.message.chat.id, db_retrieve(db, History, call.message.chat.id))
+
 
 
 bot.polling(none_stop=True)
