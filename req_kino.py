@@ -19,7 +19,7 @@ TOKEN = get_token('TOKEN_KINO')
 headers = {'X-API-KEY': TOKEN}
 
 
-def get_info(type_of_film):
+def get_info(type_of_film: str) -> list:
     my_req = requests.get(f'https://api.kinopoisk.dev/v1.4/movie?year=2023&genres.name={type_of_film}', headers=headers)
     res_dict = my_req.text
     data = json.loads(res_dict)

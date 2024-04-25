@@ -1,14 +1,15 @@
 # -*- coding: UTF-8 -*-
 from python_basic_diploma.database.common.models import *
 from python_basic_diploma.database.common.models import History, db
+from typing import Any
 
 
-def fulfill_date(data_base, model, *data):
+def fulfill_date(data_base, model, *data: list) -> Any:
     with data_base.atomic():
         model.insert_many(data).execute()
 
 
-def retrieve_all_data(data_base, model, chat_id):
+def retrieve_all_data(data_base, model, chat_id: int) -> str:
     with data_base.atomic():
         response = [i.film_name for i in model.select().where(History.chat_id == chat_id)]
 

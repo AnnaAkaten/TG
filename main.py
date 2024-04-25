@@ -7,11 +7,12 @@ import req_kino
 from python_basic_diploma.database.common.models import History, db
 from python_basic_diploma.database.utils.core import crud
 
+
 db_create = crud.create()
 db_retrieve = crud.retrieve()
 
 
-def get_token(key):
+def get_token(key: str) -> str:
     tok_path = os.path.abspath('.env')
     load_dotenv(tok_path)
     return os.environ.get(key)
@@ -25,7 +26,7 @@ rules = 'Правила проживания: \n❌строго запрещен
 avito = r'https://www.avito.ru/moskovskaya_oblast_troitsk/doma_dachi_kottedzhi/kottedzh_250m_na_uchastke_8sot._2983767192?utm_campaign=native&utm_medium=item_page_android&utm_source=soc_sharing_seller'
 
 
-def film_info(call, res):
+def film_info(call, res: list):
     bot.send_message(call.message.chat.id, '\n'.join([res[0], res[1]]))
     bot.send_photo(call.message.chat.id, res[2])
     data = [call.message.chat.id, call.message.from_user.first_name, res[0]]
@@ -153,5 +154,4 @@ def callback(call):
             bot.send_message(call.message.chat.id, db_retrieve(db, History, call.message.chat.id))
 
 
-
-bot.polling(none_stop=True)
+# bot.polling(none_stop=True, interval=1)
