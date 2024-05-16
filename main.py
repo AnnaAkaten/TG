@@ -154,4 +154,4 @@ def callback(call):
             bot.send_message(call.message.chat.id, db_retrieve(db, History, call.message.chat.id))
 
 
-# bot.polling(none_stop=True, interval=1)
+bot.polling(none_stop=True, interval=1)
