@@ -45,9 +45,9 @@ def get_use_text(message):
         bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}')
     elif 'фото' in message.text.lower():
         data1 = open(os.path.abspath(
-            '1.1ss3tba5eiIBHLgnF7q55zkXeCSJFPgqQRF4IIUAfiA.813nJpkz0a50gg2vhOEq249YuxEYmDSRPVmmIg2T3hc'), 'rb')
+            'media_files/1.1ss3tba5eiIBHLgnF7q55zkXeCSJFPgqQRF4IIUAfiA.813nJpkz0a50gg2vhOEq249YuxEYmDSRPVmmIg2T3hc'), 'rb')
         data2 = open(os.path.abspath(
-            '1.K8lSs7a5hyBkBAUtCLtE5VwRhSbsEgU2ZB-FIuAGgyI.nh0hG-HGpnSeGqu93ziMGu6SbOjnIqsZXrNHN8IzIeA'), 'rb')
+            'media_files/1.K8lSs7a5hyBkBAUtCLtE5VwRhSbsEgU2ZB-FIuAGgyI.nh0hG-HGpnSeGqu93ziMGu6SbOjnIqsZXrNHN8IzIeA'), 'rb')
         bot.send_photo(message.chat.id, data1)
         bot.send_photo(message.chat.id, data2)
     elif 'забронир' in message.text.lower():
@@ -109,9 +109,9 @@ def callback(call):
             bot.send_message(call.message.chat.id, 'Длительно', reply_markup=bottom_menu_for_q2())
         elif call.data == 'q3':
             data1 = open(os.path.abspath(
-                '1.1ss3tba5eiIBHLgnF7q55zkXeCSJFPgqQRF4IIUAfiA.813nJpkz0a50gg2vhOEq249YuxEYmDSRPVmmIg2T3hc'), 'rb')
+                'media_files/1.1ss3tba5eiIBHLgnF7q55zkXeCSJFPgqQRF4IIUAfiA.813nJpkz0a50gg2vhOEq249YuxEYmDSRPVmmIg2T3hc'), 'rb')
             data2 = open(os.path.abspath(
-                '1.K8lSs7a5hyBkBAUtCLtE5VwRhSbsEgU2ZB-FIuAGgyI.nh0hG-HGpnSeGqu93ziMGu6SbOjnIqsZXrNHN8IzIeA'), 'rb')
+                'media_files/1.K8lSs7a5hyBkBAUtCLtE5VwRhSbsEgU2ZB-FIuAGgyI.nh0hG-HGpnSeGqu93ziMGu6SbOjnIqsZXrNHN8IzIeA'), 'rb')
             bot.send_photo(call.message.chat.id, data1)
             bot.send_photo(call.message.chat.id, data2)
         elif call.data == 'q4':
